@@ -1,4 +1,4 @@
-package principal;
+package tema01_primer_programa;
 
 public class Principal {
     public static void main(String[] args) {
