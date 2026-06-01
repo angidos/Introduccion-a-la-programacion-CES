@@ -5,6 +5,7 @@ public class Usuario {
     String apellido;
     String email;
     String contrasena;
+    String repetirContrasena;
     String paisNacimiento;
     String perfil;
 }
