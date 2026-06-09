@@ -218,3 +218,67 @@ Clase base utilizada para representar usuarios del sistema.
 - IntelliJ IDEA
 - Git
 - GitHub
+
+---
+
+# VC3 - Modelado con POO
+
+## Descripción
+
+Se desarrolló un sistema de gestión de usuarios por consola aplicando conceptos de Programación Orientada a Objetos.
+
+El sistema permite:
+
+* Registrar usuarios.
+* Iniciar sesión.
+* Validar usuarios existentes.
+* Validar credenciales.
+* Gestionar usuarios mediante un array.
+* Utilizar herencia entre distintos tipos de usuarios.
+
+## Clases implementadas
+
+### Usuario
+
+Clase base que contiene la información común de todos los usuarios.
+
+### Admin
+
+Hereda de Usuario y representa usuarios administradores.
+
+### Tester
+
+Hereda de Usuario y representa usuarios testers.
+
+### SistemaUsuarios
+
+Gestiona el almacenamiento, búsqueda y registro de usuarios.
+
+## Diagrama UML
+
+
+                 Usuario
+                 /     \
+              Admin   Tester
+
+SistemaUsuarios
+------------------------------------
+- usuarios : Usuario[]
+------------------------------------
++ buscarUsuarioPorEmail(email)
++ registrarUsuario(usuario)
+
+
+## Usuarios precargados
+
+### Administrador
+
+* Email: [admin@test.com](mailto:admin@test.com)
+* Contraseña: 123
+
+### Tester
+
+* Email: [tester@test.com](mailto:tester@test.com)
+* Contraseña: big
+
+

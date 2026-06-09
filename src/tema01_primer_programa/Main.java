@@ -6,8 +6,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Usuario usuario1 = new Usuario();
+
         Scanner scanner = new Scanner(System.in);
+        SistemaUsuarios sistema = new SistemaUsuarios();
 
         int opcion = -1;
         String emailLogin;
@@ -26,51 +27,93 @@ public class Main {
                     System.out.println("=== REGISTRO ===");
 
                     System.out.print("Ingrese nombre: ");
-                    usuario1.nombre = scanner.next();
+                    String nombre = scanner.next();
 
                     System.out.print("Ingrese apellido: ");
-                    usuario1.apellido = scanner.next();
+                    String apellido = scanner.next();
 
                     System.out.print("Ingrese email: ");
-                    usuario1.email = scanner.next();
+                    String email = scanner.next();
 
                     System.out.print("Ingrese contraseña: ");
-                    usuario1.contrasena = scanner.next();
+                    String contrasena = scanner.next();
 
                     System.out.print("Confirme la contraseña: ");
-                    usuario1.repetirContrasena = scanner.next();
+                    String repetirContrasena = scanner.next();
 
-                    if (!usuario1.contrasena.equals(usuario1.repetirContrasena)) {
+                    if (!contrasena.equals(repetirContrasena)) {
                         System.out.println("Las contraseñas no coinciden");
                         break;
                     }
 
                     System.out.print("Ingrese pais de nacimiento: ");
-                    usuario1.paisNacimiento = scanner.next();
+                    String paisNacimiento = scanner.next();
 
-                    usuario1.perfil = "Administrador";
+                    System.out.println("Seleccione tipo de usuario:");
+                    System.out.println("1 - Administrador");
+                    System.out.println("2 - Tester");
+                    int tipoUsuario = scanner.nextInt();
 
-                    System.out.println("Usuario registrado correctamente");
+                    Usuario nuevoUsuario;
+
+                    if (tipoUsuario == 1) {
+                        nuevoUsuario = new Admin(
+                                nombre,
+                                apellido,
+                                email,
+                                contrasena,
+                                repetirContrasena,
+                                paisNacimiento,
+                                "Administrador"
+                        );
+                    } else {
+                        nuevoUsuario = new Tester(
+                                nombre,
+                                apellido,
+                                email,
+                                contrasena,
+                                repetirContrasena,
+                                paisNacimiento,
+                                "Tester"
+                        );
+                    }
+
+                    boolean registrado = sistema.registrarUsuario(nuevoUsuario);
+
+                    if (registrado) {
+                        System.out.println("Usuario registrado correctamente");
+                    } else {
+                        System.out.println("No fue posible registrar el usuario. Puede que el email ya exista o no haya espacio disponible.");
+                    }
+
                     break;
                 case 2:
                     System.out.println("=== Login ===");
-
-                    if (usuario1.email == null) {
-                        System.out.println("No existe un usuario registrado. Primero debe registrarse.");
-                        break;2
-                    }
 
                     System.out.println("Ingrese su email: ");
                     emailLogin = scanner.next();
 
                     System.out.println("Ingrese su contraseña");
                     contrasenaLogin = scanner.next();
-                    if (emailLogin.equals(usuario1.email) && contrasenaLogin.equals(usuario1.contrasena)){
-                        System.out.println("Login exitoso");
-                    } else {
-                        System.out.println("Email o contraseña invalidas");
-                    }
+
+                    Usuario usuarioEncontrado = sistema.buscarUsuarioPorEmail(emailLogin);
+
+                    if(usuarioEncontrado == null) {
+                    System.out.println("El usuario no existe.");
+
                     break;
+                    }
+
+                    if (contrasenaLogin.equals(usuarioEncontrado.getContrasena())) {
+                        System.out.println("Login exitoso");
+                        System.out.println("Bienvenido/a " + usuarioEncontrado.getNombre());
+                        System.out.println("Perfil: " + usuarioEncontrado.getPerfil());
+                    }   else {
+                    System.out.println("Contraseña incorrecta");
+                    }
+
+                    break;
+
                 case 3:
                     System.out.println(" 3 Salir");
                     break;
