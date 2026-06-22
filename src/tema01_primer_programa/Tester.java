@@ -9,4 +9,8 @@ public class Tester extends Usuario {
         super(nombre, apellido, email, contrasena,
                 repetirContrasena, paisNacimiento, perfil);
     }
+    @Override
+    public String obtenerPermisos() {
+        return "Puede acceder como tester del sistema.";
+    }
 }

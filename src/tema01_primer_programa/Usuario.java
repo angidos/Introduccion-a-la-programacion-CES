@@ -1,7 +1,7 @@
 package tema01_primer_programa;
 
 
-public class Usuario {
+public abstract class Usuario {
     private String nombre;
     private String apellido;
     private String email;
@@ -73,5 +73,7 @@ public class Usuario {
     public void setPerfil(String perfil){
         this.perfil = perfil;
     }
+
+    public abstract String obtenerPermisos();
 
 }

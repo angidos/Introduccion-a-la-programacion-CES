@@ -1,33 +1,19 @@
 package tema01_primer_programa;
 
+import java.util.ArrayList;
+
 public class SistemaUsuarios {
 
-    Usuario[] usuarios = new Usuario[10];
+    ArrayList<Usuario> usuarios = new ArrayList<>();
 
     public SistemaUsuarios(){
-        usuarios[0] = new Admin(
-                "Admin",
-                "Quintero",
-                "admin@test.com",
-                "123",
-                "123",
-                "Mexico",
-                "Administrador"
-        );
-        usuarios[1] = new Tester(
-                "Panda",
-                "Tito",
-                "tester@test.com",
-                "big",
-                "big",
-                "Uruguay",
-                "Tester"
-        );
+        usuarios.add(new Admin("Admin","Quintero","admin@test.com","123","123","Mexico","Administrador"));
+        usuarios.add(new Tester("Panda","Tito","tester@test.com","big","big","Uruguay","Tester"));
     }
     public Usuario buscarUsuarioPorEmail(String email){
-        for (int i =0; i < usuarios.length; i++){
-            if (usuarios[i] != null && usuarios[i].getEmail().equals(email)){
-                return usuarios[i];
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (usuarios.get(i).getEmail().equals(email)) {
+                return usuarios.get(i);
             }
         }
         return null;
@@ -37,12 +23,18 @@ public class SistemaUsuarios {
         if (buscarUsuarioPorEmail(nuevoUsuario.getEmail()) != null){
             return false;
         }
-        for (int i = 0; i < usuarios.length; i++){
-            if (usuarios[i] == null){
-                usuarios[i] = nuevoUsuario;
-                return true;
-            }
+        usuarios.add(nuevoUsuario);
+        return true;
+    }
+    public void listarUsuarios(){
+        for (int i = 0;i < usuarios.size(); i++){
+            Usuario usuario = usuarios.get(i);
+
+            System.out.println("Nombre: " + usuario.getNombre());
+            System.out.println("Apellido: " + usuario.getApellido());
+            System.out.println("Email: " + usuario.getEmail());
+            System.out.println("Perfil: " + usuario.getPerfil());
+            System.out.println("--------------------------");
         }
-        return false;
     }
 }

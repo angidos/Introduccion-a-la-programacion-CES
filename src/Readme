@@ -281,4 +281,161 @@ SistemaUsuarios
 * Email: [tester@test.com](mailto:tester@test.com)
 * Contraseña: big
 
+---
+
+# Actualización - Colecciones, abstracción y nuevas funcionalidades
+
+## Descripción
+
+Se actualizó el sistema de gestión de usuarios incorporando colecciones de Java, abstracción, polimorfismo y nuevas funcionalidades dentro del menú del sistema.
+
+El programa mantiene el registro y login por consola, y luego de iniciar sesión permite acceder a un menú interno con opciones para crear usuarios testers, reiniciar contraseñas, listar usuarios, buscar usuarios y cerrar sesión.
+
+## Cambios realizados
+
+### Uso de colecciones
+
+Se reemplazó el arreglo de usuarios por una colección de Java:
+
+```java
+ArrayList<Usuario> usuarios = new ArrayList<>();
+```
+
+Esto permite almacenar usuarios sin depender de un tamaño fijo como ocurría con el arreglo.
+
+### Abstracción y polimorfismo
+
+La clase `Usuario` fue definida como clase abstracta, ya que representa una base común para distintos tipos de usuario.
+
+```java
+public abstract class Usuario
+```
+
+Además, se agregó el método abstracto:
+
+```java
+public abstract String obtenerPermisos();
+```
+
+Este método es implementado de forma diferente en las clases hijas `Admin` y `Tester`, aplicando polimorfismo.
+
+### Herencia
+
+Se mantiene la herencia entre clases:
+
+```text
+Usuario
+├── Admin
+└── Tester
+```
+
+Las clases `Admin` y `Tester` heredan los atributos y comportamientos comunes de `Usuario`, y cada una define su propia implementación del método `obtenerPermisos()`.
+
+### Nuevas funcionalidades
+
+Se incorporaron las siguientes funcionalidades:
+
+* Crear usuario tester.
+* Reiniciar contraseña.
+* Listar usuarios.
+* Buscar usuario por email.
+* Cerrar sesión.
+
+Estas opciones se encuentran dentro del menú interno, disponible luego de iniciar sesión correctamente.
+
+## Menú interno
+
+Luego del login exitoso, el sistema muestra las siguientes opciones:
+
+```text
+1 Crear usuario
+2 Reiniciar contraseña
+3 Listar usuarios
+4 Buscar usuario
+5 Cerrar sesión
+```
+
+## Clases principales
+
+### Usuario
+
+Clase abstracta que contiene los atributos comunes de los usuarios, manteniéndolos privados y accediendo a ellos mediante getters y setters.
+
+### Admin
+
+Clase que hereda de `Usuario` y representa a los usuarios administradores.
+
+### Tester
+
+Clase que hereda de `Usuario` y representa a los usuarios testers. Al crear un tester, se permite seleccionar su seniority: Junior, Senior o Líder.
+
+### SistemaUsuarios
+
+Clase encargada de gestionar la colección de usuarios. Contiene métodos para registrar usuarios, buscar usuarios por email y listar todos los usuarios.
+
+### Main
+
+Clase principal encargada de mostrar los menús, pedir datos por consola y llamar a los métodos correspondientes de `SistemaUsuarios`.
+
+## Diagrama UML actualizado
+
+```text
+                 Usuario
+        --------------------------------
+        - nombre : String
+        - apellido : String
+        - email : String
+        - contrasena : String
+        - repetirContrasena : String
+        - paisNacimiento : String
+        - perfil : String
+        --------------------------------
+        + Usuario()
+        + Usuario(...)
+        + getNombre() : String
+        + setNombre(nombre) : void
+        + getApellido() : String
+        + setApellido(apellido) : void
+        + getEmail() : String
+        + setEmail(email) : void
+        + getContrasena() : String
+        + setContrasena(contrasena) : void
+        + getPerfil() : String
+        + setPerfil(perfil) : void
+        + obtenerPermisos() : String
+                  /_\
+                   |
+        -------------------------
+        |                       |
+      Admin                   Tester
+------------------       ------------------
++ obtenerPermisos()      + obtenerPermisos()
+
+
+              SistemaUsuarios
+--------------------------------------------
+- usuarios : ArrayList<Usuario>
+--------------------------------------------
++ SistemaUsuarios()
++ buscarUsuarioPorEmail(email) : Usuario
++ registrarUsuario(usuario) : boolean
++ listarUsuarios() : void
+
+
+                    Main
+--------------------------------------------
++ main(args) : void
+```
+
+## Buenas prácticas aplicadas
+
+* Se mantuvieron los atributos privados en la clase `Usuario`.
+* Se utilizaron constructores para inicializar objetos.
+* Se separaron responsabilidades en distintas clases.
+* `SistemaUsuarios` se encarga de la gestión de usuarios.
+* `Main` se encarga de la interacción con el usuario por consola.
+* Se reemplazó el arreglo por una colección más flexible.
+* Se reutilizó el método de búsqueda para login, búsqueda de usuario y reinicio de contraseña.
+
+
 
